@@ -1,8 +1,8 @@
 "use client";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Index from "./pages/Index";
-import Create from "./pages/Create"
-import View from "./pages/View"
+import Index from "./pages/index";
+import Create from "./pages/create"
+import View from "./pages/view"
 
 
 
