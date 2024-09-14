@@ -1,0 +1,73 @@
+/* Estilo general del formulario */
+.formContainer {
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Contenedor de cada grupo de formulario */
+  .container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
+  
+  /* Estilo para el título de cada campo */
+  .title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #444;
+    margin-bottom: 8px;
+  }
+  
+  /* Estilo para los campos de entrada */
+  .input {
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .input:focus {
+    border-color: #0070f3;
+    box-shadow: 0 0 0 3px rgba(0, 112, 255, 0.2);
+    outline: none;
+  }
+  
+  /* Estilo para el botón de enviar */
+  .submitButton {
+    padding: 15px 25px;
+    border: none;
+    border-radius: 8px;
+    background-color: #0070f3;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.125rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    text-align: center;
+    display: inline-block;
+    text-decoration: none;
+  }
+  
+  .submitButton:hover {
+    background-color: #005bb5;
+  }
+  
+  .submitButton:active {
+    transform: scale(0.98);
+  }
+  
+  /* Estilo para la imagen de la portada */
+  .coverImage {
+    margin-top: 10px;
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
