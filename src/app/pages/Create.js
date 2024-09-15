@@ -1,18 +1,20 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Layout from "../components/layout";
 import { useAppContext } from "../store/store";
 
 export default function Create() {
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [cover, setCover] = useState("");
-  const [intro, setIntro] = useState("");
-  const [completed, setCompleted] = useState(false);
-  const [review, setReview] = useState("");
+  const [formData, setFormData] = useState({
+    title: "",
+    author: "",
+    cover: "",
+    intro: "",
+    completed: false,
+    review: "",
+  });
 
   const store = useAppContext();
 
-  const inputStyles = {
+  const inputStyles = useMemo(() => ({
     formContainer: {
       width: "400px",
       margin: "0 auto",
@@ -32,95 +34,55 @@ export default function Create() {
       borderRadius: "5px",
       fontSize: "16px",
     },
-  };
+  }), []);
 
   function handleChange(e) {
-    switch (e.target.name) {
-      case "title":
-        setTitle(e.target.value);
-        break;
-      case "author":
-        setAuthor(e.target.value);
-        break;
-      case "intro":
-        setIntro(e.target.value);
-        break;
-      case "completed":
-        setCompleted(e.target.checked);
-        break;
-      case "review":
-        setReview(e.target.value);
-        break;
-    }
+    const { name, value, type, checked } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: type === "checkbox" ? checked : value,
+    }));
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-
     const newBook = {
+      ...formData,
       id: crypto.randomUUID(),
-      title,
-      author,
-      cover,
-      intro,
-      completed,
-      review,
     };
-
     store.createItem(newBook);
   }
 
   function handleOnChangeFile(e) {
-    const element = e.target;
-    var file = element.files[0];
-    var reader = new FileReader();
-    reader.onloadend = function () {
-      console.log("RESULT", reader.result);
-      setCover(reader.result.toString());
-    };
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onloadend = () => setFormData((prevData) => ({
+      ...prevData,
+      cover: reader.result.toString(),
+    }));
     reader.readAsDataURL(file);
   }
 
   return (
     <Layout>
       <form onSubmit={handleSubmit} style={inputStyles.formContainer}>
-        <div style={inputStyles.container}>
-          <div style={inputStyles.title}>Title</div>
-          <input
-            style={inputStyles.input}
-            type="text"
-            name="title"
-            onChange={handleChange}
-            value={title}
-          />
-        </div>
-
-        <div style={inputStyles.container}>
-          <div style={inputStyles.title}>Author</div>
-          <input
-            style={inputStyles.input}
-            type="text"
-            name="author"
-            onChange={handleChange}
-            value={author}
-          />
-        </div>
+        {["title", "author", "intro", "review"].map((field) => (
+          <div key={field} style={inputStyles.container}>
+            <div style={inputStyles.title}>{field.charAt(0).toUpperCase() + field.slice(1)}</div>
+            <input
+              style={inputStyles.input}
+              type="text"
+              name={field}
+              onChange={handleChange}
+              value={formData[field]}
+            />
+          </div>
+        ))}
 
         <div style={inputStyles.container}>
           <div style={inputStyles.title}>Cover</div>
           <input type="file" name="cover" onChange={handleOnChangeFile} />
-          <div>{!!cover ? <img src={cover} width="200" /> : ""}</div>
-        </div>
-
-        <div style={inputStyles.container}>
-          <div style={inputStyles.title}>intro</div>
-          <input
-            style={inputStyles.input}
-            type="text"
-            name="intro"
-            onChange={handleChange}
-            value={intro}
-          />
+          {formData.cover && <img src={formData.cover} width="200" alt="Book cover" />}
         </div>
 
         <div style={inputStyles.container}>
@@ -130,18 +92,7 @@ export default function Create() {
             type="checkbox"
             name="completed"
             onChange={handleChange}
-            value={completed}
-          />
-        </div>
-
-        <div style={inputStyles.container}>
-          <div style={inputStyles.title}>review</div>
-          <input
-            style={inputStyles.input}
-            type="text"
-            name="review"
-            onChange={handleChange}
-            value={review}
+            checked={formData.completed}
           />
         </div>
 
@@ -155,7 +106,7 @@ export default function Create() {
             borderRadius: "5px",
             backgroundColor: "#1e9638",
             color: "white",
-            fontWeigth: "bolder",
+            fontWeight: "bolder",
             fontSize: "18px",
           }}
         />
@@ -163,3 +114,4 @@ export default function Create() {
     </Layout>
   );
 }
+
