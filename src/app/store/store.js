@@ -1,4 +1,5 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import data from "../api/api";
 
 const AppContext = createContext({
   items: [],
@@ -8,75 +9,25 @@ const AppContext = createContext({
 });
 
 export default function Store({ children }) {
-  const [items, setItems] = useState([
-    /* {
-      id: "2ad6b5e2-9c2b-4959-b740-9335c85eed74",
-      title: "Harry Potter y el caliz de fuego",
-      author: "J.K. Rowling",
-      cover: "http://localhost:3000/img/cover01.png",
-      intro: "",
-      completed: false,
-      review: "",
-    },
-    {
-      id: "9942219d-eecc-42b5-a421-2d9b12736b76",
-      title: "Los ojos de la ciudad",
-      author: "Marcos Rivas",
-      cover: "http://localhost:3000/img/cover02.png",
-      intro: "",
-      completed: false,
-      review: "",
-    },
-    {
-      id: "9942219d-eecc-42b5-a421-2d9b12736b72",
-      title: "Los ojos de la ciudad",
-      author: "Marcos Rivas",
-      cover: "http://localhost:3000/img/cover03.png",
-      intro: "",
-      completed: false,
-      review: "",
-    },
-    {
-      id: "9942219d-eecc-42b5-a421-2d9b12736b71",
-      title: "Los ojos de la ciudad",
-      author: "Marcos Rivas",
-      cover: "http://localhost:3000/img/cover04.png",
-      intro: "",
-      completed: false,
-      review: "",
-    },
-    {
-      id: "9942219d-eecc-42b5-a421-2d9b112736b76",
-      title: "Los ojos de la ciudad",
-      author: "Marcos Rivas",
-      cover: "http://localhost:3000/img/cover05.png",
-      intro: "",
-      completed: false,
-      review: "",
-    }, */
-  ]);
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    setItems(data);
+  }, []);
 
   function createItem(item) {
-    const temp = [...items];
-
-    temp.unshift(item);
-
-    setItems([...temp]);
+    setItems((prevItems) => [item, ...prevItems]); // Actualiza el estado directamente
+    console.log("New book added:", item);
   }
 
   function getItem(id) {
-    const item = items.find((item) => item.id === id);
-
-    return item;
+    return items.find((item) => item.id === id);
   }
 
   function updateItem(item) {
-    const index = items.findIndex((i) => i.id === item.id);
-
-    const temp = [...items];
-
-    temp[index] = { ...item };
-
+    setItems((prevItems) =>
+      prevItems.map((i) => (i.id === item.id ? item : i))
+    );
     return true;
   }
 

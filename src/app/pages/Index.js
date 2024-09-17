@@ -12,12 +12,18 @@ export default function Index() {
     gap: "10px",
   };
 
+  console.log("Books in store:", store.items); // Verificar si hay libros en el store
+
   return (
     <Layout>
       <div style={booksContainer}>
-        {store.items.map((item) => (
-          <Book key={item.id} item={item} />
-        ))}
+        {store.items.length > 0 ? (
+          store.items.map((item) => (
+            <Book key={item.id} item={item} />
+          ))
+        ) : (
+          <p>No books available</p> // Muestra un mensaje si no hay libros
+        )}
       </div>
     </Layout>
   );

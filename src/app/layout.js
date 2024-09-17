@@ -1,4 +1,3 @@
-// app/layout.js
 import './globals.css'; // Importa tus estilos globales
 
 export const metadata = {
