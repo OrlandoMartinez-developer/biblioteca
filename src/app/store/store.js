@@ -13,6 +13,7 @@ export default function Store({ children }) {
 
   useEffect(() => {
     setItems(data);
+    console.log("Usando Data")
   }, []);
 
   function createItem(item) {
