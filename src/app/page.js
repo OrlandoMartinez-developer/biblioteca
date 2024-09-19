@@ -1,7 +1,7 @@
 "use client";
 import { Route, Routes, BrowserRouter } from "react-router-dom";
-import Index from "./pages/Indexndex";
-import Create from "./pages/Createreate";
+import Index from "./pages/Index";
+import Create from "./pages/Create";
 import View from "./pages/View";
 import { useEffect, useState } from "react";
 import Store from "./store/store"; // Cambié 'store' a 'Store' con la S mayúscula
