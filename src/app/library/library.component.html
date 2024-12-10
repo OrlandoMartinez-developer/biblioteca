@@ -1,0 +1,82 @@
+<div class="container-fluid p-0">
+  <!-- Contenedor principal -->
+  <div class="container position-relative text-white">
+    <div class="d-flex flex-column justify-content-center align-items-center h-100">
+
+      <!-- Formulario para agregar libros -->
+      <form class="card p-4 mb-4 shadow-lg bg-light text-dark" (submit)="addBook()">
+        <h2 class="h4 mb-3 text-center">Agregar un nuevo libro</h2>
+        <div class="mb-3">
+          <label for="bookTitle" class="form-label">Título</label>
+          <input
+            id="bookTitle"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newBook.title"
+            name="title"
+            placeholder="Ingrese el título del libro"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="bookAuthor" class="form-label">Autor</label>
+          <input
+            id="bookAuthor"
+            type="text"
+            class="form-control"
+            [(ngModel)]="newBook.author"
+            name="author"
+            placeholder="Ingrese el autor del libro"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="bookDescription" class="form-label">Descripción</label>
+          <textarea
+            id="bookDescription"
+            class="form-control"
+            [(ngModel)]="newBook.description"
+            name="description"
+            placeholder="Ingrese una descripción breve del libro"
+            rows="3"
+          ></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary w-100">Agregar libro</button>
+      </form>
+
+      <!-- Lista de libros -->
+      <div *ngIf="books.length > 0; else emptyLibrary" class="w-100">
+        <h2 class="h4 mb-3 text-center">Lista de libros</h2>
+        <div class="row g-3">
+          <div class="col-md-4" *ngFor="let book of books; let i = index">
+            <div class="card h-100 shadow-lg">
+              <div class="card-body">
+                <h3 class="h5 card-title">{{ book.title }}</h3>
+                <h4 class="h6 card-subtitle mb-2 text-muted">{{ book.author }}</h4>
+                <p class="card-text">{{ book.description }}</p>
+              </div>
+              <div class="card-footer text-end">
+                <button
+                  class="btn btn-danger btn-sm"
+                  (click)="deleteBook(i)"
+                >
+                  Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mensaje si no hay libros -->
+      <ng-template #emptyLibrary>
+        <div class="alert text-center mt-4" role="alert">
+          No hay libros en la biblioteca. ¡Agrega uno para comenzar!
+        </div>
+      </ng-template>
+    </div>
+
+    <!-- Curvas decorativas en la parte inferior -->
+    <div class="clouds"></div>
+  </div>
+</div>
